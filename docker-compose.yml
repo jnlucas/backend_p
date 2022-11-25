@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+    back_pulseira:
+        container_name: back_pulseira
+        image: back_pulseira
+        build:
+          context: ./docker
+        volumes:
+          - ./:/var/www/html
+        working_dir: /var/www/html
+        ports:
+          - "9991:80"
+

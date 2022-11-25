@@ -1,0 +1,12 @@
+stages:
+  - deploy-api-integracao-hom
+
+deploy-api:
+  only:
+    - homologocao
+  stage: deploy-api-integracao-hom
+  tags:
+    - virgo-salux 
+  script:
+    - cd $HOME && sh deploy-int-salux-api-hom
+  allow_failure: true

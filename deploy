@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#set -euo pipefail
+
+#copiando .env
+cp -rfv .env.example .env
+
+#buildando container
+docker-compose down
+docker-compose up -d
+
+#configurando container
+docker exec -w /var/www/html integracao-mv sh -c 'composer install'
+
+#cache
+docker exec -w /var/www/html integracao-mv sh -c 'php artisan cache:clear && php artisan view:clear'
+
+#permissoes
+docker exec -w /var/www/html integracao-mv sh -c 'chmod -R 750 .'
+docker exec -w /var/www/html integracao-mv sh -c 'chown -R apache.apache .'
+
+#restart no container
+docker-compose restart
